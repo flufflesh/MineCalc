@@ -1,0 +1,50 @@
+<div class="calc">
+    <p class="mobile">Weapons</p>
+    <div class="weapons">
+        <div class="armor-in" *ngFor="let wep of weapons">
+            <div *ngFor="let wepImg of wep.weapons" class="armor-stuff" (click)="pickWeapon(wepImg)">
+                <img src="../../../assets/weapons/{{wepImg.imageName}}.png" class="armor-img">
+                <p [class.selected]="wepImg.selected === true">{{wepImg.type}}</p>
+            </div>
+        </div>
+    </div>
+    <p class="mobile">Armor</p>
+    <div class="armor">
+        <div class="armor-in" *ngFor="let arm of armor">
+            <div *ngFor="let armImg of arm.armor" class="armor-stuff" (click)="pickArmor(armImg)">
+                <img src="../../../assets/armor/{{armImg.imageName}}.png" class="armor-img">
+                <p [class.selected]="armImg.selected === true">{{armImg.type}}</p>
+            </div>
+        </div>
+    </div>
+    <p class="mobile">Selected armor/weapon:</p>
+    <div class="armor-set">
+        <div *ngIf="selectedWeapon">
+            <img src="../../../assets//weapons/{{selectedWeapon.imageName}}.png" class="armor-imgs">
+        </div>
+        <div *ngIf="armorSet[0]">
+            <div *ngFor="let armorStand of armorSet" class="armor-set-in">
+                <img src="../../../assets/armor/{{armorStand.imageName}}.png" class="armor-imgs" (error)="changeSource($event)">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="calc-area">
+    <div class="input-area">
+        <label>Number of hits: </label>
+        <input type="number" (input)="hits()" #hitsNumber min="0" step="1" pattern="\d*">
+    </div>
+    <div class="pre-mit">
+        <p>Pre-mitigation damage:</p>
+        <p>{{preMitigation}} Hearts</p>
+        <p>Post-mitigation damage:</p>
+        <div class="damage" *ngIf="endDamage && !loading">
+            <p>{{endDamage}} Hearts</p>
+        </div>
+        <p *ngIf="!endDamage && !loading">0 Hearts</p>
+        <p *ngIf="loading">Loading...</p>
+    </div>
+    <div class="calculate-button" (click)="calculate()">
+        <button>Calculate Damage</button>
+    </div>
+</div>
